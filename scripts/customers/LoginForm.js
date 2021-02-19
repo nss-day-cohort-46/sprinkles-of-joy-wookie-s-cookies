@@ -4,13 +4,14 @@ import { customerLogin } from "./CustomerProvider.js"
 const eventHub = document.querySelector("#container")
 const contentTarget = document.querySelector(".form__login")
 
-let categories = []
 
 export const LoginForm = () => {
   render()
 }
 
+
 const render = () => {
+  //if the user is not logged in, render login HTML
   if (!authHelper.isUserLoggedIn()) {
     contentTarget.innerHTML = `
       <h3>Login</h3>
@@ -30,12 +31,16 @@ const render = () => {
   }
 }
 
+//listens for click on customer login button, stores user info, 
+//or sends to register form, or back to login form
 eventHub.addEventListener("click", e => {
+  //if id matches customer login button
   if (e.target.id === "customerLogin") {
     e.preventDefault()
+    //grab inputs 
     const loginEmail = document.querySelector(".login-email")
     const loginPassword = document.querySelector(".login-password")
-
+    //sends email and password to API to fetch customer data
     customerLogin(loginEmail, loginPassword)
       .then(user => {
         if (user) {
