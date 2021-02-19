@@ -42,7 +42,10 @@ const render = () => {
   }
 }
 
-eventHub.addEventListener("showRegisterForm", RegisterForm)
+//Renders the Register Form when the register button is clicked from the Login menu
+eventHub.addEventListener("showRegisterForm", Event => {
+  render()
+})
 
 eventHub.addEventListener("click", evt => {
   if (evt.target.id === "link__login") {
