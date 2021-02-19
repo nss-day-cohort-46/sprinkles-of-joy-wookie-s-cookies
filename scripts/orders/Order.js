@@ -3,7 +3,7 @@ export const Order = (customerOrder) => {
     <div class="order" id="${customerOrder.id}">
       <p>${new Date(customerOrder.timestamp).toLocaleString('en-US')}</p>
       <p>${customerOrder.status.label}</p>
-      <p>${customerOrder.customerId}</p>
+      <p>Order Number: ${customerOrder.id}</p>
     </div>
   `
 }
