@@ -38,8 +38,9 @@ eventHub.addEventListener("click", e => {
   if (e.target.id === "customerLogin") {
     e.preventDefault()
     //grab inputs 
-    const loginEmail = document.querySelector(".login-email").value
-    const loginPassword = document.querySelector(".login-password").value
+    const loginEmail = document.getElementById("login-email").value
+    const loginPassword = document.getElementById("login-password").value
+    console.log("click")
     //sends email and password to API to fetch customer data
     customerLogin(loginEmail, loginPassword)
       .then(user => {
