@@ -1,5 +1,5 @@
 import { authHelper } from "../auth/authHelper.js"
-import { customerLogin } from "./CustomerProvider.js"
+import { customerLogin, registerCustomer } from "./CustomerProvider.js"
 
 const eventHub = document.querySelector("#container")
 const contentTarget = document.querySelector(".form__register")
@@ -55,18 +55,22 @@ eventHub.addEventListener("click", evt => {
     eventHub.dispatchEvent(customEvent)
   }
   else if (evt.target.id === "customerRegister") {
-    e.preventDefault()
-    const registerEmail = document.querySelector(".register-email").value
-    const registerPassword = document.querySelector(".register-password").value
-    const registerFirstName = document.querySelector("register-firstName").value
-    const registerLastName = document.querySelector("register-lastName").value
-    const registerRewards = document.querySelector("register-rewards").value
-  const newCustomer = {
-    id: 1,
-    name: "Twig Mistyclover",
-    rewardsMember: true,
-    email: "twigmc@amail.com",
-    password: "twig"
-  }
+    evt.preventDefault()
+    const registerEmail = document.getElementById("register-email").value
+    const registerPassword = document.getElementById("register-password").value
+    const registerFirstName = document.getElementById("register-firstName").value
+    const registerLastName = document.getElementById("register-lastName").value
+    let registerRewards = null
+    if (document.getElementById("register-rewards").checked === true) {
+      registerRewards = true
+    }
+    else {registerRewards = false}
+    const newCustomer = {
+      name: `${registerFirstName} ${registerLastName}`,
+      rewardsMember: registerRewards,
+      email: registerEmail,
+      password: registerPassword
+    }
+    registerCustomer(newCustomer)
   }
 })
