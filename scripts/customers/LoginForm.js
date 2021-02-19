@@ -73,3 +73,7 @@ eventHub.addEventListener("click", e => {
 eventHub.addEventListener("showLoginForm", event => {
   LoginForm()
 })
+
+eventHub.addEventListener("userLoggedOut", event => {
+  LoginForm()
+})

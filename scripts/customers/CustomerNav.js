@@ -20,6 +20,7 @@ const render = (customer) => {
     <li class="userNav__link" id="userNav--showCart">My Cart</li>
     <li class="userNav__link" id="userNav--newReview">New Review</li>
     <li class="userNav__link" id="userNav--pastOrders">Order History</li>
+    <button class="userNav__link" id="userNav--logout">Log Out</button>
     </ul>
   `
 }
@@ -41,6 +42,11 @@ eventHub.addEventListener("click", event => {
         break;
       case "pastOrders":
         customEvent = new CustomEvent("showPastOrders")
+        break;
+      case "logout":
+        authHelper.logUserOutOfSessionStorage()
+        userNav.innerHTML = ""
+        customEvent = new CustomEvent("userLoggedOut")
         break;
     }
     eventHub.dispatchEvent(customEvent)
