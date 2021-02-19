@@ -43,23 +43,32 @@ eventHub.addEventListener("click", e => {
     //sends email and password to API to fetch customer data
     customerLogin(loginEmail, loginPassword)
       .then(user => {
+        //user = user object with data info
         if (user) {
+          //empties content target to fill with new data
           contentTarget.innerHTML = ""
-
+          //passes user id into function that stores user login info
           authHelper.storeUserInSessionStorage(user.id)
-
+          //dispatches event that the user is logged in
           const customEvent = new CustomEvent("userLoggedIn")
           eventHub.dispatchEvent(customEvent)
         } else {
+        //if the login info doesn't match anything in the API, 
+        //the alert message is called
           alert("Invalid email and/or password. Please try again.")
         }
       })
+  //if the target id matches register button
   } else if (e.target.id === "link__register") {
+    //empty content target for new data
     contentTarget.innerHTML = ""
-
+    //dispatch event that register button was clicked
     const customEvent = new CustomEvent("showRegisterForm")
     eventHub.dispatchEvent(customEvent)
   }
 })
 
-eventHub.addEventListener("showLoginForm", LoginForm)
+//listens for "showLoginform" and renders login form
+eventHub.addEventListener("showLoginForm", event => {
+  LoginForm()
+})
