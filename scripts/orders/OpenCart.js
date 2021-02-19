@@ -45,6 +45,7 @@ eventHub.addEventListener("showCustomerCart", e => OpenCart())
 
 
 eventHub.addEventListener("userLoggedOut", e => {
+  //resets the cart array and the DOM so that the cart doesnt have a history and doesnt display anything.
   productsInCart = []
   userCart.innerHTML = ""
 })

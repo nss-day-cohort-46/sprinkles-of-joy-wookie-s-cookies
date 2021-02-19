@@ -44,8 +44,11 @@ eventHub.addEventListener("click", event => {
         customEvent = new CustomEvent("showPastOrders")
         break;
       case "logout":
+        //removes key from session storage
         authHelper.logUserOutOfSessionStorage()
+        //removes the user nav bar from the DOM
         userNav.innerHTML = ""
+        //broadcasts that the button was clicked
         customEvent = new CustomEvent("userLoggedOut")
         break;
     }
