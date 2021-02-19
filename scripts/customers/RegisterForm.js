@@ -54,4 +54,19 @@ eventHub.addEventListener("click", evt => {
     const customEvent = new CustomEvent("showLoginForm")
     eventHub.dispatchEvent(customEvent)
   }
+  else if (evt.target.id === "customerRegister") {
+    e.preventDefault()
+    const registerEmail = document.querySelector(".register-email").value
+    const registerPassword = document.querySelector(".register-password").value
+    const registerFirstName = document.querySelector("register-firstName").value
+    const registerLastName = document.querySelector("register-lastName").value
+    const registerRewards = document.querySelector("register-rewards").value
+  const newCustomer = {
+    id: 1,
+    name: "Twig Mistyclover",
+    rewardsMember: true,
+    email: "twigmc@amail.com",
+    password: "twig"
+  }
+  }
 })
