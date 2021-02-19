@@ -20,8 +20,14 @@ export const ProductList = () => {
 
 const render = () => {
   contentTarget.innerHTML = bakeryProducts.map(product => {
-    const productCategory = bakeryCategories.find(category => cat.id === product.categoryId)
+    const productCategory = bakeryCategories.find(category => category.id === product.categoryId)
 
     return Product(product, productCategory)
   }).join("")
 }
+
+eventHub.addEventListener("categorySelected", Event => {
+  // if (Event.detail.selectedCategory !== 0) {
+  //   const filteredProducts = bakeryProducts.filter(product => product.categoryId === Event.detail.selectedCategory)
+  // }
+})
