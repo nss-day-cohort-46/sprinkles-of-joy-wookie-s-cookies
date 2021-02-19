@@ -15,7 +15,7 @@ export const OpenCart = () => {
 const render = () => {
   let cartHTML = ""
   let totalCost = 0
-
+//Builds HTML for each product in the shopping cart array
   for (const product of productsInCart) {
     cartHTML += `
       <div class="cart">
@@ -26,6 +26,7 @@ const render = () => {
     totalCost += product.price
   }
 
+  //puts the shopping cart on the DOM with the total price
   userCart.innerHTML = `
     <div>
     <h4>Cart</h4>
@@ -39,15 +40,22 @@ const render = () => {
   `
 }
 
+//Shows the shopping cart on the DOM
 eventHub.addEventListener("showCustomerCart", e => OpenCart())
 
+//Puts the new product in the shopping cart when a user clicks to add a product to their cart
 eventHub.addEventListener("addToCart", event => {
+  //gets productId from event listener
   const productId = event.detail.addedProduct
+  //gets all the products
   getProducts()
     .then(() => {
       const allProducts = useProducts()
+      //finds the product that matches the id
       const productToBeAdded = allProducts.find(prod => prod.id === productId)
+      //adds it to the cart array
       productsInCart.push(productToBeAdded)
+      //renders it to the DOM
       OpenCart()
     })
 })
