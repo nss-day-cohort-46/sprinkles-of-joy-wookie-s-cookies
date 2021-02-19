@@ -1,21 +1,31 @@
 import { authHelper } from "../auth/authHelper.js"
-import { getCustomer } from "../customers/CustomerProvider.js"
+import { getCustomer, useCustomers } from "../customers/CustomerProvider.js"
+import { getStatuses, useStatuses } from "../statuses/StatusProvider.js"
 import { Order } from "./Order.js"
 import { getOrders, useOrders } from "./OrderProvider.js"
 
 const eventHub = document.querySelector("#container")
 const contentContainer = document.querySelector(".userOrders")
 
+let orders = []
+let customers = []
 let customerOrders = []
+let customerId = sessionStorage.getItem("soj-customer-id")
+console.log(customerId)
 
 export const OrderList = () => {
   if (authHelper.isUserLoggedIn()) {
-
-    getOrders()
+    getCustomer(customerId)
+    .then(getOrders()
       .then(() => {
-        customerOrders = useOrders()
+        orders = useOrders()
+        customers = useCustomers()
+        customerOrders = orders.filter(order => {
+          return order.customerId === customerId
+        })
+        console.log(customerOrders)
         render()
-      })
+      }))
   }
 }
 
@@ -36,7 +46,7 @@ const render = () => {
       `
 }
 
-eventHub.addEventListener("showOrderHistory", () => {
+eventHub.addEventListener("showPastOrders", () => {
   OrderList()
 })
 
