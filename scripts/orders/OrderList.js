@@ -9,11 +9,11 @@ const contentContainer = document.querySelector(".userOrders")
 let orders = []
 let customer = {}
 let customerOrders = []
-//gets customer ID from session storage where they are logged in
-let customerId = sessionStorage.getItem("soj-customer-id")
 
 //grabs order history for customer to be displayed------------------------------
-export const OrderList = () => {
+const OrderList = () => {
+  //gets customer ID from session storage where they are logged in
+  let customerId = authHelper.getCurrentUserId()
   //if they are logged in
   if (authHelper.isUserLoggedIn()) {
     //get customer info from API and put into variable
@@ -57,8 +57,9 @@ const render = () => {
 
 //listens for when order history button is selected and calls orderlist
 eventHub.addEventListener("showPastOrders", () => {
-  OrderList()
-})
+    OrderList()
+  }
+)
 
 //listens for close button of orderlist modal 
 eventHub.addEventListener("click", event => {
