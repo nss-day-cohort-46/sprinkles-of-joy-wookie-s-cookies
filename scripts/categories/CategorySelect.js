@@ -32,7 +32,7 @@ eventHub.addEventListener("change", changeEvent => {
     //grabs value of target
     const categoryCustomEvent = new CustomEvent("categorySelected", {
       detail: {
-        selectedCategory: changeEvent.target.value
+        selectedCategory: parseInt(changeEvent.target.value)
       }
     })
     //dispatches value of detail to eventHub 
