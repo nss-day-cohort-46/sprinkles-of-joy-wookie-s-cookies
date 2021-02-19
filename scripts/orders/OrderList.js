@@ -8,7 +8,7 @@ const eventHub = document.querySelector("#container")
 const contentContainer = document.querySelector(".userOrders")
 
 let orders = []
-let customers = []
+let customer = {}
 let customerOrders = []
 let customerId = sessionStorage.getItem("soj-customer-id")
 console.log(customerId)
@@ -16,14 +16,18 @@ console.log(customerId)
 export const OrderList = () => {
   if (authHelper.isUserLoggedIn()) {
     getCustomer(customerId)
+    .then((customerObj) => {
+      customer = customerObj
+    })
     .then(getOrders()
       .then(() => {
         orders = useOrders()
-        customers = useCustomers()
         customerOrders = orders.filter(order => {
-          return order.customerId === customerId
+          return order.customerId === customer.id
         })
-        console.log(customerOrders)
+        console.log("custOrd", customerOrders)
+        console.log("orders", orders)
+        console.log("customer", customer)
         render()
       }))
   }
