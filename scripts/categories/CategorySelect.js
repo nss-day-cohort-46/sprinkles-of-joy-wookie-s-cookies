@@ -7,8 +7,10 @@ let categories = []
 
 export const CategorySelect = () => {
   getCategories()
-  categories = useCategories()
-  render()
+  .then(() => {
+    categories = useCategories()
+    render()
+  })
 }
 
 const render = () => {
