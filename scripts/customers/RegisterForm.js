@@ -48,14 +48,16 @@ eventHub.addEventListener("showRegisterForm", Event => {
 })
 
 eventHub.addEventListener("click", evt => {
+  //Goes back to the login screen
   if (evt.target.id === "link__login") {
     contentTarget.innerHTML = ""
-
     const customEvent = new CustomEvent("showLoginForm")
     eventHub.dispatchEvent(customEvent)
   }
+  //registers a user
   else if (evt.target.id === "customerRegister") {
     evt.preventDefault()
+    //pulls data from the form
     const registerEmail = document.getElementById("register-email").value
     const registerPassword = document.getElementById("register-password").value
     const registerFirstName = document.getElementById("register-firstName").value
@@ -65,12 +67,27 @@ eventHub.addEventListener("click", evt => {
       registerRewards = true
     }
     else {registerRewards = false}
+    //creates customer object for the API
     const newCustomer = {
       name: `${registerFirstName} ${registerLastName}`,
       rewardsMember: registerRewards,
       email: registerEmail,
       password: registerPassword
     }
+    //saves data to API
     registerCustomer(newCustomer)
+    //logs in the new custmer
+    .then(() => customerLogin(registerEmail, registerPassword))
+    .then(user => {
+      if (user) {
+        contentTarget.innerHTML = ""
+        authHelper.storeUserInSessionStorage(user.id)
+        const customEvent = new CustomEvent("userLoggedIn")
+        eventHub.dispatchEvent(customEvent)
+      }
+      else {
+        alert("Invalid email and/or password. Please try again.")
+      }
+    })
   }
 })

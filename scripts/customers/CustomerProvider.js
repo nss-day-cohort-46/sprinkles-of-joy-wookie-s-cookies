@@ -30,9 +30,5 @@ export const registerCustomer = (newCustomerObj) => {
     },
     body: JSON.stringify(newCustomerObj)
   })
-    .then(res => res.json())
-    .then(parsedResponse => {
-      console.log(parsedResponse)
-      })
     .then(getCustomers)
 }
