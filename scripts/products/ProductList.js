@@ -9,6 +9,7 @@ const contentTarget = document.querySelector(".menu__items")
 let bakeryProducts = []
 let bakeryCategories = []
 let allReviews = []
+let selectBoxCategory = 0
 
 export const ProductList = () => {
   getProducts()
@@ -39,10 +40,26 @@ const render = (arrayOfBakeryProducts) => {
 
 //Listens for a selection on the category dropdown
 eventHub.addEventListener("categorySelected", Event => {
+  selectBoxCategory = Event.detail.selectedCategory
   //Runs when certain category is selected. Filters all of the bakery products down to the ones that have the corresponding categoryId to the selection.
   if (Event.detail.selectedCategory !== 0) {
     const allBakeryProducts = useProducts()
     const filteredProducts = allBakeryProducts.filter(product => product.categoryId === Event.detail.selectedCategory)
+    //sends the filted products to get rendered to ProductList.
+    render(filteredProducts)
+  }
+  //runs when the select box does not have a chosen category
+  else {
+    render(bakeryProducts)
+  }
+})
+
+eventHub.addEventListener("newReviewAdded", Event => {
+  allReviews = useReviews()
+  //Runs when certain category is selected. Filters all of the bakery products down to the ones that have the corresponding categoryId to the selection.
+  if (selectBoxCategory !== 0) {
+    const allBakeryProducts = useProducts()
+    const filteredProducts = allBakeryProducts.filter(product => product.categoryId === selectBoxCategory)
     //sends the filted products to get rendered to ProductList.
     render(filteredProducts)
   }
