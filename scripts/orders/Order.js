@@ -1,7 +1,9 @@
 const eventHub = document.querySelector("#container")
 
+//creates HTML for each individual order -------------------------------------
 export const Order = (customerOrder) => {
   let deleteButton = ""
+  //if order status is ready for pickup, delete button is added
   if (customerOrder.status.id === 1){
     deleteButton = `<button id="deleteOrder" value="${customerOrder.id}">Delete Order</button>`
   } 
@@ -15,6 +17,7 @@ export const Order = (customerOrder) => {
   `
 }
 
+//listens for click on delete order button------------------------------------
 eventHub.addEventListener("click", event => {
   if (event.target.id === "deleteOrder") {
     const deleteOrder = new CustomEvent("deleteOrderClicked", {

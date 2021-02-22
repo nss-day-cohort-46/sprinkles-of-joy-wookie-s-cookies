@@ -11,7 +11,7 @@ let customer = {}
 let customerOrders = []
 
 //grabs order history for customer to be displayed------------------------------
-const OrderList = () => {
+export const OrderList = () => {
   //gets customer ID from session storage where they are logged in
   let customerId = authHelper.getCurrentUserId()
   //if they are logged in
