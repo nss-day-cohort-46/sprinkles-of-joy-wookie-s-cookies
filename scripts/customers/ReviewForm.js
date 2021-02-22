@@ -1,5 +1,6 @@
 import { authHelper } from "../auth/authHelper.js"
 import { getProducts, useProducts } from "../products/ProductProvider.js"
+import { saveReview } from '../reviews/ReviewProvider.js'
 
 const eventHub = document.querySelector("#container")
 const contentTarget = document.querySelector(".form__review")
@@ -28,13 +29,13 @@ const render = () => {
             <select class="dropdown" id="productRatingSelect">
                 <option value="0">Select A Rating..</option>
                 <option value="1">1 Star</option>
-                <option value="2">2 Star</option>
-                <option value="3">3 Star</option>
-                <option value="4">4 Star</option>
-                <option value="5">5 Star</option>
+                <option value="2">2 Stars</option>
+                <option value="3">3 Stars</option>
+                <option value="4">4 Stars</option>
+                <option value="5">5 Stars</option>
             </select>
             <fieldset>
-                <label for="review-text">Email: </label>
+                <label for="review-text">Feedback: </label>
                 <input type="text" id="review-text" name="review-text">
             </fieldset>
             <button id="submitReview">Submit</button>
@@ -44,12 +45,32 @@ const render = () => {
     }
 }
 
-//listens for click on customer login button, stores user info, 
-//or sends to register form, or back to login form
 eventHub.addEventListener("click", e => {
     //if id matches customer login button
     if (e.target.id === "submitReview") {
         e.preventDefault()
+        const customerId = parseInt(authHelper.getCurrentUserId())
+        const productId = parseInt(document.getElementById("productSelect").value)
+        const reviewText = document.getElementById("review-text").value
+        const rating = parseInt(document.getElementById("productRatingSelect").value)
+        const newRatingObj = {
+            customerId: customerId,
+            productId: productId,
+            reviewText: reviewText,
+            rating: rating
+        }
+        saveReview(newRatingObj)
+        .then(() => {
+            const customEvent = new CustomEvent("newReviewAdded")
+            eventHub.dispatchEvent(customEvent)
+            document.getElementById("productSelect").value = 0
+            document.getElementById("review-text").value = ""
+            document.getElementById("productRatingSelect").value = 0
+        })
+    }
+    else if (e.target.id === "cancelReview") {
+        e.preventDefault()
+        contentTarget.innerHTML = ""
     }
 })
 
