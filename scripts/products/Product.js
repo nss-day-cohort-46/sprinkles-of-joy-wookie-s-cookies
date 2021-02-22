@@ -1,16 +1,20 @@
 const eventHub = document.querySelector("#container")
 
 export const Product = (productObj, categoryObj, reviewArray) => {
+    //setting up variables
     let totalStars = 0
     let averageRating = 0
     let rating = ""
+    //totals all the review ratings
     reviewArray.map(reviewObj => {
         totalStars += reviewObj.rating
     })
+    //shows the average review
     if (reviewArray.length > 0) {
         averageRating = totalStars/reviewArray.length
         rating = `Rating: ${averageRating.toFixed(1)} out of 5`
     }
+    //shows that there are not reviews if there are none
     else {
         rating = "No Reviews Yet"
     }
