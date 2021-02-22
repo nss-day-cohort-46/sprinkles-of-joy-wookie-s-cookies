@@ -3,10 +3,33 @@ import { saveContact } from "./ContactProvider.js"
 const eventHub = document.querySelector("#container")
 const contentTarget = document.querySelector(".contact")
 
-export const ContactForm = () => {
-    render()
-}
 
+//listens for when contact link is clicked and begins render function--------------
+eventHub.addEventListener("click", event => {
+    if(event.target.id === "showContactForm") {
+        render()
+    }
+})
+
+//grabs form input data and creates new object to be saved-------------------------
+eventHub.addEventListener("click", event => {
+    if(event.target.id === "contactSubmit"){
+        //grabs data from form inputs and sets into vars
+        const name = document.getElementById("contact-fullName").value
+        const email = document.getElementById("contact-email").value
+        const message = document.getElementById("contact-message").value
+        //creates new object with data from inputs
+        const newContact = {
+            name: name,
+            email: email,
+            message: message
+        }
+        //saves new object to API
+        saveContact(newContact)
+    }
+})
+
+//renders contact form to DOM-------------------------------------------------------
 const render = () => {
     contentTarget.innerHTML = `
     <h3We'd love to hear from you!</h3>
@@ -29,25 +52,3 @@ const render = () => {
     </form>
     `
 }
-
-//Renders the contact Form when the contact button is clicked from the Login menu
-eventHub.addEventListener("click", event => {
-    if(event.target.id === "showContactForm") {
-        render()
-    }
-})
-
-eventHub.addEventListener("click", event => {
-    if(event.target.id === "contactSubmit"){
-        const name = document.getElementById("contact-fullName").value
-        const email = document.getElementById("contact-email").value
-        const message = document.getElementById("contact-message").value
-        
-        const newContact = {
-            name: name,
-            email: email,
-            message: message
-        }
-        saveContact(newContact)
-    }
-})
