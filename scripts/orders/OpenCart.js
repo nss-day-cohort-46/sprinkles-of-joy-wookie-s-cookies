@@ -83,5 +83,9 @@ eventHub.addEventListener("click", clickEvent => {
 
         return saveOrder(newOrder, productsInCart)
       })
+      .then(() => {
+        productsInCart = []
+        OpenCart()
+      })
   }
 })

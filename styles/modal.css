@@ -25,3 +25,18 @@
   display: flex;
   justify-content: space-between;
 }
+
+.orderTableHeaders {
+  display: flex;
+  justify-content: space-between;
+}
+
+.messageContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.orderNumber {
+  font-size: 75px;
+}
