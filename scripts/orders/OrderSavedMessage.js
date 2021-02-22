@@ -10,7 +10,10 @@ const render = orderNumber => {
   <div id="orderSavedMessage__modal" class="modal--parent">
         <div class="modal--content">
         <h3>Order has been recieved</h3>
-        <p>Your order number is: ${orderNumber}</p>
+        <div class="messageContent">
+          <p>Your order number is:</p>
+          <p id="orderNumber"><strong>${orderNumber}</strong></p>
+        </div>
         <button id="modal--close">Close</button>
         </div>
     </div>
