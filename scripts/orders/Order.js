@@ -1,7 +1,9 @@
+const eventHub = document.querySelector("#container")
+
 export const Order = (customerOrder) => {
   let deleteButton = ""
   if (customerOrder.status.id === 1){
-    deleteButton = `<p><button id="deleteOrder">Delete Order</button><p>`
+    deleteButton = `<button id="deleteOrder" value="${customerOrder.id}">Delete Order</button>`
   } 
   return `
     <div class="order" id="${customerOrder.id}">
@@ -13,3 +15,13 @@ export const Order = (customerOrder) => {
   `
 }
 
+eventHub.addEventListener("click", event => {
+  if (event.target.id === "deleteOrder") {
+    const deleteOrder = new CustomEvent("deleteOrderClicked", {
+      detail: {
+        orderToBeDeleted: event.target.value
+      }
+    }) 
+    eventHub.dispatchEvent(deleteOrder)
+  }
+})
