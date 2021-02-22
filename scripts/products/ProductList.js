@@ -43,4 +43,7 @@ eventHub.addEventListener("categorySelected", Event => {
     //sends the filted products to get rendered to ProductList.
     render(filteredProducts)
   }
+  else {
+    render(bakeryProducts)
+  }
 })
