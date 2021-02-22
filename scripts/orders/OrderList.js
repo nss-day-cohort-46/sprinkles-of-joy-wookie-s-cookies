@@ -16,13 +16,14 @@ const OrderList = () => {
   let customerId = authHelper.getCurrentUserId()
   //if they are logged in
   if (authHelper.isUserLoggedIn()) {
+    // console.log(customerId)
     //get customer info from API and put into variable
     getCustomer(customerId)
-    .then((customerObj) => {
-      customer = customerObj
-    })
-    //then get orders array from API and put into var
-    .then(getOrders)
+      .then((customerObj) => {
+        customer = customerObj
+      })
+      //then get orders array from API and put into var
+      .then(getOrders)
       .then(() => {
         orders = useOrders()
         //filter through array of orders and find each one with 
@@ -30,6 +31,7 @@ const OrderList = () => {
         customerOrders = orders.filter(order => {
           return order.customerId === customer.id
         })
+        // debugger
         render()
       })
   }
@@ -61,8 +63,8 @@ const render = () => {
 
 //listens for when order history button is selected and calls orderlist
 eventHub.addEventListener("showPastOrders", () => {
-    OrderList()
-  }
+  OrderList()
+}
 )
 
 //listens for close button of orderlist modal 
