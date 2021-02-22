@@ -14,6 +14,7 @@ eventHub.addEventListener("click", event => {
 //grabs form input data and creates new object to be saved-------------------------
 eventHub.addEventListener("click", event => {
     if(event.target.id === "contactSubmit"){
+        event.preventDefault()
         //grabs data from form inputs and sets into vars
         const name = document.getElementById("contact-fullName").value
         const email = document.getElementById("contact-email").value
@@ -26,6 +27,9 @@ eventHub.addEventListener("click", event => {
         }
         //saves new object to API
         saveContact(newContact)
+    } else if (event.target.id === "contactClose") {
+        event.preventDefault()
+        contentTarget.innerHTML = ""
     }
 })
 
@@ -49,6 +53,7 @@ const render = () => {
         <input type="text" id="contact-message" name="contact-message">
         </fieldset>
         <button id="contactSubmit">Submit</button>
+        <button id="contactClose">Close</button>
     </form>
     `
 }
