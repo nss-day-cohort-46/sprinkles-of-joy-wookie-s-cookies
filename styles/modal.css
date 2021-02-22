@@ -42,3 +42,7 @@
 .orderNumber {
   font-size: 75px;
 }
+
+.reviewConfirmationMessage {
+  text-align: center;
+}

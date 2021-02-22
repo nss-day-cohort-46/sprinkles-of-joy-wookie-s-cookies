@@ -9,7 +9,7 @@ const render = () => {
     contentContainer.innerHTML = `
     <div id="reviewSubmittedMessage__modal" class="modal--parent">
         <div class="modal--content">
-        <h3>Your Review Has Been Submitted</h3>
+        <h3 class="reviewConfirmationMessage">Your Review Has Been Submitted</h3>
         </div>
     </div>
     `
@@ -17,7 +17,7 @@ const render = () => {
 
 eventHub.addEventListener("newReviewAdded", event => {
     ReviewSubmitted()
-    setTimeout(closeModal(), 2000)
+    setTimeout(closeModal, 1000)
 })
 
 //clears modal HTML
