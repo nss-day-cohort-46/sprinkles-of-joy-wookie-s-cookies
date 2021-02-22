@@ -1,9 +1,11 @@
 import { bakeryAPI } from "../Settings.js"
 import { saveOrderProducts } from "./OrderProductProvider.js"
+import { OrderRecieved } from "./OrderSavedMessage.js"
 
 const eventHub = document.querySelector("#container")
 
 let orders = []
+let orderNumber = NaN
 
 export const useOrders = () => orders.slice()
 
@@ -25,15 +27,17 @@ export const saveOrder = (order, productsInOrder) => {
   })
     .then(res => res.json())
     .then(createdOrder => {
+      orderNumber = createdOrder.id
       const orderProducts = productsInOrder.map(product => {
         return {
-          "orderId": createdOrder.id,
+          "orderId": orderNumber,
           "productId": product.id
         }
       })
       return saveOrderProducts(orderProducts)
     })
     .then(() => getOrders())
+    .then(() => OrderRecieved(orderNumber))
     .then(dispatchStateChangeEvent)
 }
 
