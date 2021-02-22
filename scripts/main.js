@@ -1,5 +1,6 @@
 console.log("Welcome to Sprinkles of Joy!")
 
+import "./customers/ReviewForm.js"
 import "./customers/RegisterForm.js"
 import "./orders/OpenCart.js"
 import "./orders/OrderList.js"
