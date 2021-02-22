@@ -13,6 +13,7 @@ eventHub.addEventListener("click", event => {
 
 //grabs form input data and creates new object to be saved-------------------------
 eventHub.addEventListener("click", event => {
+    //if submit button pressed...
     if(event.target.id === "contactSubmit"){
         event.preventDefault()
         //grabs data from form inputs and sets into vars
@@ -27,7 +28,9 @@ eventHub.addEventListener("click", event => {
         }
         //saves new object to API
         saveContact(newContact)
+    //else if close button pressed...
     } else if (event.target.id === "contactClose") {
+        //reset content to blank
         event.preventDefault()
         contentTarget.innerHTML = ""
     }
