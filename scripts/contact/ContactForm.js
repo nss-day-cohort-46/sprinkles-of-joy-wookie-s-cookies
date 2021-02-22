@@ -1,3 +1,5 @@
+import { saveContact } from "./ContactProvider.js"
+
 const eventHub = document.querySelector("#container")
 const contentTarget = document.querySelector(".contact")
 
@@ -31,7 +33,21 @@ const render = () => {
 //Renders the contact Form when the contact button is clicked from the Login menu
 eventHub.addEventListener("click", event => {
     if(event.target.id === "showContactForm") {
-        console.log(event.target.id)
         render()
+    }
+})
+
+eventHub.addEventListener("click", event => {
+    if(event.target.id === "contactSubmit"){
+        const name = document.getElementById("contact-fullName").value
+        const email = document.getElementById("contact-email").value
+        const message = document.getElementById("contact-message").value
+        
+        const newContact = {
+            name: name,
+            email: email,
+            message: message
+        }
+        saveContact(newContact)
     }
 })
