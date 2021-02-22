@@ -46,4 +46,8 @@ eventHub.addEventListener("categorySelected", Event => {
     //sends the filted products to get rendered to ProductList.
     render(filteredProducts)
   }
+  //runs when the select box does not have a chosen category
+  else {
+    render(bakeryProducts)
+  }
 })
