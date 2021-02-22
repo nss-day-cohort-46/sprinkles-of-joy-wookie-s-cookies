@@ -1,15 +1,25 @@
 const eventHub = document.querySelector("#container")
 
-export const Product = (product, category) => {
+export const Product = (productObj, categoryObj, reviewArray) => {
+    let totalStars = 0
+    let averageRating = 0
+    reviewArray.map(reviewObj => {
+        totalStars += reviewObj.rating
+    })
+    if (reviewArray.length > 0) {
+        averageRating = totalStars/reviewArray.length
+    }
     return `
       <section class="baked_good">
           <header class="baked_good__header">
-              <h4>${product.name}</h4>
-              <p>$${product.price}</p>
+              <h4>${productObj.name}</h4>
+              <p>$${productObj.price}</p>
           </header>
           <div>
-              <button id="addProduct--${product.id}">Add to Cart</button>
-              <p>${product.description} [${category.name}]</p>
+              <button id="addProduct--${productObj.id}">Add to Cart</button>
+              <p id="review--${productObj.id}">Rating: ${averageRating} out of 5</p>
+              <a href="#">see all reviews</a>
+              <p>${productObj.description} [${categoryObj.name}]</p>
           </div>
       </section>
   `
