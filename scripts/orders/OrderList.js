@@ -22,7 +22,7 @@ const OrderList = () => {
       customer = customerObj
     })
     //then get orders array from API and put into var
-    .then(getOrders()
+    .then(getOrders)
       .then(() => {
         orders = useOrders()
         //filter through array of orders and find each one with 
@@ -31,7 +31,7 @@ const OrderList = () => {
           return order.customerId === customer.id
         })
         render()
-      }))
+      })
   }
 }
 
