@@ -43,6 +43,13 @@ const render = () => {
 //Shows the shopping cart on the DOM
 eventHub.addEventListener("showCustomerCart", e => OpenCart())
 
+
+eventHub.addEventListener("userLoggedOut", e => {
+  //resets the cart array and the DOM so that the cart doesnt have a history and doesnt display anything.
+  productsInCart = []
+  userCart.innerHTML = ""
+})
+
 //Puts the new product in the shopping cart when a user clicks to add a product to their cart
 eventHub.addEventListener("addToCart", event => {
   //gets productId from event listener
