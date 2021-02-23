@@ -21,26 +21,44 @@ const ReviewList = productID => {
             const reviewsForThisProduct = allReviews.filter(review => review.productId === productID)
             render(reviewsForThisProduct, matchingProduct)
         })
-    }
-    
-    //takes an array of bakery products
-    const render = (arrayOfFilteredReviews, Product) => {
-        //maps over each bakery product to find the category associated with that product
-        const reviewHTML = arrayOfFilteredReviews.map(review => {
+}
+
+//takes an array of bakery products
+const render = (arrayOfFilteredReviews, Product) => {
+    //maps over each bakery product to find the category associated with that product
+    let reviewHTML = arrayOfFilteredReviews.map(review => {
         const matchingCustomer = allCustomers.find(customer => customer.id === review.customerId)
         return Review(review, matchingCustomer)
     }).join("")
-    contentTarget.innerHTML = `
-        <div id = "reviews__modal" class="modal--parent" >
-            <div class="modal--content">
-                <h3>Reviews - ${Product.name}</h3>
-                <div>
-                    ${reviewHTML}
+    if (reviewHTML === "") {
+        reviewHTML = `<h4>Have you tried this product?</h4>
+        <h4>Be the first to leave a review!<h4>
+        `
+        contentTarget.innerHTML = `
+            <div id = "reviews__modal" class="modal--parent" >
+                <div class="modal--content">
+                    <h3>Reviews - ${Product.name}</h3>
+                    <div>
+                        ${reviewHTML}
+                    </div>
+                    <button id="modal--close">Close</button>
                 </div>
-                <button id="modal--close">Close</button>
-            </div>
-        </div >
-`
+            </div >
+        `
+    }
+    else {
+        contentTarget.innerHTML = `
+            <div id = "reviews__modal" class="modal--parent" >
+                <div class="modal--content">
+                    <h3>Reviews - ${Product.name}</h3>
+                    <div>
+                        ${reviewHTML}
+                    </div>
+                    <button id="modal--close">Close</button>
+                </div>
+            </div >
+        `
+    }
 }
 
 
