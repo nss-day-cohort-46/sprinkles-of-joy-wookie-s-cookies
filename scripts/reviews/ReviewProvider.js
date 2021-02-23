@@ -26,10 +26,12 @@ export const saveReview = (reviewObj) => {
 }
 
 const deleteReview = reviewIdent => {
+    //deletes a specified review from the API
     return fetch(`${bakeryAPI.baseURL}/reviews/${reviewIdent}`, {
         method: "DELETE",
     })
     .then(getReviews)
+    //need to tell the reviews to render again
     .then(() => {
         const newEvent = new CustomEvent("reviewStateChanged")
         eventHub.dispatchEvent(newEvent)
@@ -38,6 +40,7 @@ const deleteReview = reviewIdent => {
 
 const eventHub = document.querySelector("#container")
 
+//listens for the button click on a specific review
 eventHub.addEventListener("deleteReviewClicked", evt => {
     deleteReview(evt.detail.deletedReview)
 })

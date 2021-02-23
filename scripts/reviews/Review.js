@@ -4,6 +4,7 @@ const eventHub = document.querySelector("#container")
 
 export const Review = (review, customer) => {
     let button = ""
+    //if the review belongs to the logged in user, put up a delete button
     if (authHelper.isUserLoggedIn()) {
         let customerId = parseInt(authHelper.getCurrentUserId())
         if (customerId === customer.id) {
@@ -20,6 +21,8 @@ export const Review = (review, customer) => {
 `
 }
 
+
+//sends out an event if the delete review button is clicked
 eventHub.addEventListener("click", evt => {
     //Goes back to the login screen
     if (evt.target.id.startsWith("deleteReviewButton--")) {
