@@ -5,7 +5,7 @@ export const Review = (review, customer) => {
     if (authHelper.isUserLoggedIn()) {
         let customerId = parseInt(authHelper.getCurrentUserId())
         if (customerId === customer.id) {
-            button = `<button id="deleteReviewButton">Delete</button>`
+            button = `<button id="deleteReviewButton--${review.id}">Delete</button>`
         }
     }
     return `
@@ -17,3 +17,15 @@ export const Review = (review, customer) => {
         </article>
 `
 }
+
+eventHub.addEventListener("click", evt => {
+    //Goes back to the login screen
+    if (evt.target.id.startWith("deleteReviewButton--")) {
+        const [prefix, reviewId] = evt.target.id.split("--")
+        const addProductEvent = new CustomEvent("deleteReviewClicked", {
+            detail: {
+                addedProduct: parseInt(reviewId)
+            }
+        })
+        eventHub.dispatchEvent(addProductEvent)
+    }
