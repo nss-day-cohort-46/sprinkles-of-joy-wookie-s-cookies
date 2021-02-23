@@ -1,5 +1,7 @@
 import { authHelper } from "../auth/authHelper.js"
 
+const eventHub = document.querySelector("#container")
+
 export const Review = (review, customer) => {
     let button = ""
     if (authHelper.isUserLoggedIn()) {
@@ -20,7 +22,7 @@ export const Review = (review, customer) => {
 
 eventHub.addEventListener("click", evt => {
     //Goes back to the login screen
-    if (evt.target.id.startWith("deleteReviewButton--")) {
+    if (evt.target.id.startsWith("deleteReviewButton--")) {
         const [prefix, reviewId] = evt.target.id.split("--")
         const addProductEvent = new CustomEvent("deleteReviewClicked", {
             detail: {
@@ -29,3 +31,4 @@ eventHub.addEventListener("click", evt => {
         })
         eventHub.dispatchEvent(addProductEvent)
     }
+})
