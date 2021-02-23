@@ -1,29 +1,39 @@
 import { Review } from "./Review.js"
 import { getReviews, useReviews } from "./ReviewProvider.js"
+import { getProducts, useProducts } from "../products/ProductProvider.js"
+import { getCustomers, useCustomers } from "../customers/CustomerProvider.js"
 
 let allReviews = []
+let allProducts = []
+let allCustomers = []
 const contentTarget = document.querySelector(".userReviews")
 
 const ReviewList = productID => {
     getReviews()
+        .then(getCustomers)
+        .then(getProducts)
         .then(() => {
             //saves all reviews to allReviews variable
             allReviews = useReviews()
+            allProducts = useProducts()
+            allCustomers = useCustomers()
+            const matchingProduct = allProducts.find(product => product.id === productID)
             const reviewsForThisProduct = allReviews.filter(review => review.productId === productID)
-            render(reviewsForThisProduct)
+            render(reviewsForThisProduct, matchingProduct)
         })
-}
-
-//takes an array of bakery products
-const render = arrayOfFilteredReviews => {
-    //maps over each bakery product to find the category associated with that product
-    const reviewHTML = arrayOfFilteredReviews.map(review => {
-        return Review(review)
+    }
+    
+    //takes an array of bakery products
+    const render = (arrayOfFilteredReviews, Product) => {
+        //maps over each bakery product to find the category associated with that product
+        const reviewHTML = arrayOfFilteredReviews.map(review => {
+        const matchingCustomer = allCustomers.find(customer => customer.id === review.customerId)
+        return Review(review, matchingCustomer)
     }).join("")
     contentTarget.innerHTML = `
         <div id = "reviews__modal" class="modal--parent" >
             <div class="modal--content">
-                <h3>Reviews For This Product</h3>
+                <h3>Reviews - ${Product.name}</h3>
                 <div>
                     ${reviewHTML}
                 </div>

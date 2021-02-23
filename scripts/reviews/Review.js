@@ -1,8 +1,9 @@
-export const Review = (review) => {
+export const Review = (review, customer) => {
     return `
         <article class="productReview">
-            <h5>${review.rating} out of 5 stars</h5>
-            <p>${review.reviewText}</p>
+            <h3>${review.rating} out of 5 stars</h3>
+            <p>"${review.reviewText}"</p>
+            <p>-${customer.name}</p>
         </article>
 `
 }

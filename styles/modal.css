@@ -46,3 +46,7 @@
 .reviewConfirmationMessage {
   text-align: center;
 }
+
+.productReview {
+  border-top: solid black 1px;
+}
