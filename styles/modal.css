@@ -19,6 +19,8 @@
   padding: 1em;
   box-shadow: 0px 0px 10px 0px black;
   transform: translate(-50%, -50%);
+  max-height: calc(100vh - 210px);
+  overflow-y: auto;
 }
 
 .order {
@@ -39,4 +41,8 @@
 
 .orderNumber {
   font-size: 75px;
+}
+
+.reviewConfirmationMessage {
+  text-align: center;
 }

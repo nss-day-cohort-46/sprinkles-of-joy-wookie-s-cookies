@@ -40,7 +40,6 @@ eventHub.addEventListener("click", e => {
     //grab inputs 
     const loginEmail = document.getElementById("login-email").value
     const loginPassword = document.getElementById("login-password").value
-    console.log("click")
     //sends email and password to API to fetch customer data
     customerLogin(loginEmail, loginPassword)
       .then(user => {
