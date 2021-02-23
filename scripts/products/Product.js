@@ -26,8 +26,8 @@ export const Product = (productObj, categoryObj, reviewArray) => {
           </header>
           <div>
               <button id="addProduct--${productObj.id}">Add to Cart</button>
-              <p id="review--${productObj.id}">${rating}</p>
-              <a href="#">see all reviews (${reviewArray.length})</a>
+              <p id="rating--${productObj.id}">${rating}</p>
+              <a href="#" id="reviews--${productObj.id}">see all reviews (${reviewArray.length})</a>
               <p>${productObj.description} [${categoryObj.name}]</p>
           </div>
       </section>
@@ -40,6 +40,18 @@ eventHub.addEventListener("click", evt => {
         const addProductEvent = new CustomEvent("addToCart", {
             detail: {
                 addedProduct: parseInt(productId)
+            }
+        })
+        eventHub.dispatchEvent(addProductEvent)
+    }
+})
+
+eventHub.addEventListener("click", evt => {
+    if (evt.target.id.startsWith("reviews--")) {
+        const [prefix, productId] = evt.target.id.split("--")
+        const addProductEvent = new CustomEvent("showReviewsClicked", {
+            detail: {
+                chosenProduct: parseInt(productId)
             }
         })
         eventHub.dispatchEvent(addProductEvent)
