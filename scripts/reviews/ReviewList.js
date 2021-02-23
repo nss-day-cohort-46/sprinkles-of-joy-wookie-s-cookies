@@ -64,7 +64,10 @@ const render = (arrayOfFilteredReviews, Product) => {
 
 const eventHub = document.querySelector("#container")
 
+let currentlyRenderedProduct = 0
+
 eventHub.addEventListener("showReviewsClicked", Event => {
+    currentlyRenderedProduct = Event.detail.chosenProduct
     ReviewList(Event.detail.chosenProduct)
 })
 
@@ -78,3 +81,9 @@ eventHub.addEventListener("click", event => {
 const closeModal = () => {
     contentTarget.innerHTML = ""
 }
+
+eventHub.addEventListener("reviewStateChanged", evt => {
+    if (contentTarget.innerHTML !== "") {
+        ReviewList(currentlyRenderedProduct)
+    }
+})
