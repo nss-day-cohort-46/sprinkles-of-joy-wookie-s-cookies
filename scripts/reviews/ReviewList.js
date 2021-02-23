@@ -1,25 +1,52 @@
-export const ProductList = () => {
-    getProducts()
-        .then(getCategories)
-        //imports the reviews
-        .then(getReviews)
+import { Review } from "./Review.js"
+import { getReviews, useReviews } from "./ReviewProvider.js"
+
+let allReviews = []
+const contentTarget = document.querySelector(".userReviews")
+
+const ReviewList = productID => {
+    getReviews()
         .then(() => {
-            bakeryProducts = useProducts()
-            bakeryCategories = useCategories()
             //saves all reviews to allReviews variable
             allReviews = useReviews()
-            render(bakeryProducts)
+            const reviewsForThisProduct = allReviews.filter(review => review.productId === productID)
+            render(reviewsForThisProduct)
         })
 }
 
 //takes an array of bakery products
-const render = (arrayOfBakeryProducts) => {
+const render = arrayOfFilteredReviews => {
     //maps over each bakery product to find the category associated with that product
-    contentTarget.innerHTML = arrayOfBakeryProducts.map(product => {
-        const productCategory = bakeryCategories.find(category => category.id === product.categoryId)
-        //finds all reviews that match this product
-        const arrayOfMatchingReviews = allReviews.filter(review => review.productId === product.id)
-        //returns HTML of each product with info about it and the category it is associated with
-        return Product(product, productCategory, arrayOfMatchingReviews)
+    const reviewHTML = arrayOfFilteredReviews.map(review => {
+        return Review(review)
     }).join("")
+    contentTarget.innerHTML = `
+        <div id = "reviews__modal" class="modal--parent" >
+            <div class="modal--content">
+                <h3>Reviews For This Product</h3>
+                <div>
+                    ${reviewHTML}
+                </div>
+                <button id="modal--close">Close</button>
+            </div>
+        </div >
+`
+}
+
+
+const eventHub = document.querySelector("#container")
+
+eventHub.addEventListener("showReviewsClicked", Event => {
+    ReviewList(Event.detail.chosenProduct)
+})
+
+eventHub.addEventListener("click", event => {
+    if (event.target.id === "modal--close") {
+        closeModal()
+    }
+})
+
+//clears modal HTML
+const closeModal = () => {
+    contentTarget.innerHTML = ""
 }
