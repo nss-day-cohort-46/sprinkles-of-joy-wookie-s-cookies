@@ -17,7 +17,9 @@ const ReviewList = productID => {
             allReviews = useReviews()
             allProducts = useProducts()
             allCustomers = useCustomers()
+            //finds the product that the reviews are about to put the name on the DOM
             const matchingProduct = allProducts.find(product => product.id === productID)
+            //finds all the reviews for that specific product
             const reviewsForThisProduct = allReviews.filter(review => review.productId === productID)
             render(reviewsForThisProduct, matchingProduct)
         })
@@ -26,10 +28,12 @@ const ReviewList = productID => {
 //takes an array of bakery products
 const render = (arrayOfFilteredReviews, Product) => {
     //maps over each bakery product to find the category associated with that product
+    //goes through each review and makes HTML for it
     let reviewHTML = arrayOfFilteredReviews.map(review => {
         const matchingCustomer = allCustomers.find(customer => customer.id === review.customerId)
         return Review(review, matchingCustomer)
     }).join("")
+    //changes what the html is if there are no reviews
     if (reviewHTML === "") {
         reviewHTML = `<h4>Have you tried this product?</h4>
         <h4>Be the first to leave a review!<h4>
@@ -46,6 +50,7 @@ const render = (arrayOfFilteredReviews, Product) => {
             </div >
         `
     }
+    //puts the html on the DOM of all the reviews
     else {
         contentTarget.innerHTML = `
             <div id = "reviews__modal" class="modal--parent" >
@@ -64,10 +69,15 @@ const render = (arrayOfFilteredReviews, Product) => {
 
 const eventHub = document.querySelector("#container")
 
+let currentlyRenderedProduct = 0
+
+//listens for a show reviews button clicked
 eventHub.addEventListener("showReviewsClicked", Event => {
+    currentlyRenderedProduct = Event.detail.chosenProduct
     ReviewList(Event.detail.chosenProduct)
 })
 
+//closes the review screen
 eventHub.addEventListener("click", event => {
     if (event.target.id === "modal--close") {
         closeModal()
@@ -78,3 +88,10 @@ eventHub.addEventListener("click", event => {
 const closeModal = () => {
     contentTarget.innerHTML = ""
 }
+
+//rerenders the reviews if the api state has changed
+eventHub.addEventListener("reviewStateChanged", evt => {
+    if (contentTarget.innerHTML !== "") {
+        ReviewList(currentlyRenderedProduct)
+    }
+})
